@@ -74,6 +74,7 @@ class OpenAILLMService(BaseLLMModel):
         Returns:
             The history of the conversation.
         """
+        
         return self._context_history
     
     # Property to access tools from the tool handler

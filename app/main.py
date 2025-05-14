@@ -5,9 +5,9 @@ import json
 import streamlit as st
 
 def main():
-    st.set_page_config(page_title="Jarvis Chatbot", page_icon="🤖")
-    st.title("🤖 Jarvis Chatbot")
-    st.write("Talk to Jarvis, your personal assistant!")
+    st.set_page_config(page_title="J.A.R.V.I.S.", page_icon="🤖")
+    st.title("🤖 J.A.R.V.I.S.")
+    st.write("Talk to J.A.R.V.I.S., your personal assistant!")
 
     # Authentication
     if "authenticated" not in st.session_state:
@@ -43,8 +43,10 @@ def main():
             st.markdown(user_input)
 
         try:
-            generator = JARVIS_AGENT.execute(messages=[
-                {"role": "user", "content": user_input}
+            generator = JARVIS_AGENT.execute(
+                messages=[
+                {"role": "user", 
+                 "content": user_input}
             ])
 
             # Append assistant's responses one-by-one in the same order
