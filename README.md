@@ -1,8 +1,7 @@
-# 🤖 Chatbot
+# J.A.R.V.I.S
 
-This is my personal project to represents a personal AIAgent built. It enables natural conversation between users and an intelligent assistant, making it suitable for tasks like personal productivity, customer support, or learning companions. 
+This is my personal project to represent a personal AIAgent built. It enables natural conversation between users and an intelligent assistant, making it suitable for tasks like personal productivity, customer support, or learning companions. 
 Note: This project is still under development. Some features may not be fully available yet.
-
 
 ---
 
