@@ -1,11 +1,13 @@
 # 🤖 Chatbot
 
-This is my personal project to represents a personal AIAgent built. It enables natural conversation between users and an intelligent assistant, making it suitable for tasks like personal productivity, customer support, or learning companions. I'm still working on it so some features is not available yet.
+This is my personal project to represents a personal AIAgent built. It enables natural conversation between users and an intelligent assistant, making it suitable for tasks like personal productivity, customer support, or learning companions. 
+Note: This project is still under development. Some features may not be fully available yet.
 
 
 ---
 
 ## Project Structure
+```bash
 .
 ├── app ## UI directory
 │   ├── clients
@@ -79,16 +81,17 @@ This is my personal project to represents a personal AIAgent built. It enables n
     └── basic_agent_use.ipynb
 
 21 directories, 50 files
+```
 
 ---
 
 ## Architecture
-- core/interfaces: Abstract base classes for all implementations
-- core/models: Pydantic models for type-safe data handling
-- core/handlers: Processors for tools and extensions
-- core/utils: utilities
-- modules: Implementation of various services, extensions and intergrations
-- 
+- `core/interfaces`: Abstract base classes for LLM, embedding, and tool components  
+- `core/models`: Pydantic models for structured, type-safe data  
+- `core/handlers`: Classes to handle tools and logic execution  
+- `core/utils`: Utilities and wrappers  
+- `modules`: Implementations for services and tool integrations (e.g., OpenAI, weather)  
+- `app`: Streamlit UI and authentication layer  
 
 ## Features
 
@@ -96,7 +99,7 @@ This is my personal project to represents a personal AIAgent built. It enables n
 - User authentication (username & password)
 - Saves and restores chat history
 - Tools intergration
-- Type safety
+- Type-safe codebase using Pydantic models  
 - Working well with OPENAI API - Still workings on extensions for other LLM providers
 
 ---
