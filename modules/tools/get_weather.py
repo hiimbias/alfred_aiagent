@@ -6,9 +6,12 @@ from core.models.tool_responses.weather_response import WeatherForecast, Current
 import logging
 from functools import lru_cache
 import time
+from dotenv import load_dotenv
+load_dotenv()
 
 # Set up logging
 logger = logging.getLogger(__name__)
+
 
 @lru_cache(maxsize=100)
 def get_weather_data(location: str, days: int, api_key: str) -> dict:

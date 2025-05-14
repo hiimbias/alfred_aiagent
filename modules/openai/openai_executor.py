@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, List, Optional, Generator, Literal
 from pydantic import BaseModel 
 from openai import OpenAI
 from openai._types import NOT_GIVEN
-from core.interfaces import BaseExecutor
+from core.interfaces.base_executor import BaseExecutor
 from modules.openai.openai_llm_service import OpenAILLMService
 from core.models.responses import OpenAgentResponse
 from core.handlers import ToolHandler
