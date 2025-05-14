@@ -8,6 +8,7 @@ from core.interfaces import BaseExecutor
 from modules.openai.openai_llm_service import OpenAILLMService
 from core.models.responses import OpenAgentResponse
 from core.handlers import ToolHandler
+import datetime
 
 class OpenAIExecutor(BaseExecutor):
     def __init__(self,
@@ -26,6 +27,7 @@ class OpenAIExecutor(BaseExecutor):
         self._llm_service = OpenAILLMService(
             client=client,
             model=model,
+            system_message=self.define_system_message(system_message),
             tools=tools,
             api_key=api_key,
             temperature=temperature,
@@ -80,24 +82,34 @@ class OpenAIExecutor(BaseExecutor):
             max_tokens=self.max_tokens,
             top_p=self.top_p,
         )
-        
-    def get_history(self) -> List[Dict[str, str]]:
-        """
-        Get the chat history.
-
-        Returns:
-            The chat history.
-        """
+    
+    def get_history(self) -> List[Dict[str, Any]]:
         return self._llm_service.history
     
-    def clear_history(self) -> list[Dict[str, Any]]:
+    def clear_history(self) -> List[Dict[str, Any]]:
         """
-        Clear the chat history.
-
-        Returns:
-            The cleared chat history.
+        Clear the chat history leaving only the system message.
         """
         return self._llm_service.clear_context()
+    
+    def define_system_message(self, message: Optional[str] = None) -> str:
+        """
+        Define the system message for the OpenAI model.
+
+        Args:
+            message (Optional[str]): The system message to use. (default: None)
+
+        Returns:
+            str: The system message.
+        """
+        system_message = message if message is not None else """
+            System Message: You are an helpful assistant, try to assist the user in everything.\n
+            """
+        system_message += f"""
+        Current date and time: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n
+        
+        """
+        return system_message
 
     def execute(self, 
                 messages: List[Dict[str, str]],

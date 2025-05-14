@@ -15,7 +15,7 @@ from core.models.responses import (
 
 class OpenAILLMService(BaseLLMModel):
     def __init__(self, 
-                 client: OpenAI,
+                 client: OpenAI = None,
                  model: str = "gpt-4o-mini",
                  system_message: Optional[str] = None,
                  tools: Optional[List[Callable[..., Any]]] = NOT_GIVEN,
@@ -23,22 +23,32 @@ class OpenAILLMService(BaseLLMModel):
                  temperature: Optional[float] = 0.3,
                  max_tokens: Optional[int] = None,
                  top_p: Optional[float] = None,
-                 *args,
-                 **kwargs):
+                *args,
+                **kwargs
+                 ) -> None:
         super().__init__(
             temperature=temperature,
             max_tokens=max_tokens,
             top_p=top_p,
             *args,
-            **kwargs
+            **kwargs,
         )
 
-        self._tool_handler = ToolHandler(tools=tools)
+        self._tool_handler = ToolHandler(
+            tools=tools, llm_provider="openai", schema_type="OpenAI"
+        )
         
         self._client = client
+        if client is None:
+            if api_key is None:
+                raise ValueError("No API key provided. Please set the OPENAI_API_KEY environment variable or pass it as an argument.")
+            self._client = OpenAI(
+                api_key=api_key,
+            )
+
         self._model = model
-        self._system_message = system_message
         self._api_key = api_key
+        self._system_message = system_message
         self._context_history = [
             {
                 "role": "system",
@@ -58,6 +68,12 @@ class OpenAILLMService(BaseLLMModel):
     
     @property
     def history(self) -> List[Dict[str, Any]]:
+        """
+        Get the history of the conversation.
+
+        Returns:
+            The history of the conversation.
+        """
         return self._context_history
     
     # Property to access tools from the tool handler
@@ -195,7 +211,7 @@ class OpenAILLMService(BaseLLMModel):
         )
         
         return response
-    
+          
     def model_generate(self, 
                        messages: List[Dict[str, str]],
                        tools: Optional[List[Dict[str, Any]]] = None,
@@ -319,4 +335,3 @@ class OpenAILLMService(BaseLLMModel):
             }
         ]
         return self._context_history
-    
