@@ -4,3 +4,4 @@ tiktoken
 mcp
 loguru
 streamlit
+dotenv
